@@ -50,6 +50,7 @@ prices_and_average_wages_per_min_period AS ( /*ceny potravin a mzdy za první do
     				czechia_price_value_prev AS price_per_min_period,
     				price AS price_list,
     				industry, 
+    				industry_code, 
     				average_wages_value_prev AS average_wages_per_min_period,
     				amount_of_food_per_av_wages_prev AS  amount_of_food_per_av_wages_min_period,
     				av_wages_year_prev AS min_period_year,
@@ -68,6 +69,7 @@ prices_and_average_wages_per_max_period AS ( /*ceny potravin a mzdy za poslední
     				czechia_price_value_prev AS price_per_max_period,
     				price AS price_list,
     				industry, 
+    				industry_code,
     				average_wages_value_prev AS average_wages_per_max_period,
     				amount_of_food_per_av_wages_prev AS  amount_of_food_per_av_wages_max_period,
     				av_wages_year_prev AS max_period_year,
@@ -81,6 +83,7 @@ prices_and_average_wages_per_max_period AS ( /*ceny potravin a mzdy za poslední
 )
 SELECT 
 	   pawmin.industry,
+	   pawmin.industry_code,
 	   amount_of_food_per_av_wages_max_period,
 	   amount_of_food_per_av_wages_min_period,
 	   average_wages_per_max_period, 
@@ -94,7 +97,7 @@ SELECT
 FROM prices_and_average_wages_per_max_period pawmax
 	JOIN prices_and_average_wages_per_min_period pawmin 
 		ON pawmax.food_category = pawmin.food_category
-		AND pawmax.industry = pawmin.industry
+		AND pawmax.industry_code = pawmin.industry_code
 		AND pawmax.max_period_quarter = pawmin.min_period_quarter
 ORDER BY amount_of_food_per_av_wages_max_period DESC;
 

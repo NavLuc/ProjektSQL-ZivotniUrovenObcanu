@@ -7,7 +7,8 @@ WITH average_wage_per_year_and_quarter AS ( /*průměrné mzdy v různých odvě
 	SELECT 	DISTINCT
 			cpc.code AS calculation_code,
 	   		cpc.name AS calculation_type,
-       		cpib.name AS industry, 
+       		cpib.name AS industry,
+       		cpib.code AS industry_code,
        		cpay.value AS average_wages,
        		cpay.payroll_year,
        		cpay.payroll_quarter
@@ -27,12 +28,13 @@ average_wage_growth_per_year_and_quarter AS ( /*nárůsty mezd v různých odvě
 	   		awpy.calculation_type,
 	   		awpy.calculation_code,
 	   		awpy.industry,
+	   		awpy.industry_code,
     		round( ( awpy.average_wages - awpy2.average_wages ) / awpy2.average_wages * 100, 2 ) as average_wages_growth,
     		awpy2.average_wages AS average_wages_value_prev,
     		awpy.average_wages AS average_wages_value
 	FROM average_wage_per_year_and_quarter awpy
 	LEFT JOIN average_wage_per_year_and_quarter awpy2
-    	ON awpy.industry = awpy2.industry
+    	ON awpy.industry_code = awpy2.industry_code
     	AND awpy.calculation_code = awpy2.calculation_code
     	AND awpy.payroll_year = awpy2.payroll_year + 1
     	AND awpy.payroll_quarter = awpy2.payroll_quarter
