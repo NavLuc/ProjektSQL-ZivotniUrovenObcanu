@@ -54,7 +54,7 @@ FROM
 	WHERE 	average_wages_growth > 0 
 			AND price_growth > 0
 			AND price_quarter = '1' /*meziroční růst vztahujeme k srovnatelnému období prvního kvartálu v roce*/
-			AND av_wages_quarter = '1'
+			AND av_wages_quarter = '1' /*meziroční růst vztahujeme k srovnatelnému období prvního kvartálu v roce*/
 			AND calculation_code = 200
 
 ) AS comparation_price_and_average_wages_growth
